@@ -1,0 +1,4 @@
+import libs = doctest%lib{doctest}
+
+./: exe{tutorial}: cxx{tutorial} $libs
+./: exe{subcases}: cxx{subcases} $libs
