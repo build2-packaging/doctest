@@ -1,4 +1,4 @@
-./: {*/ -build/} doc{PACKAGE_README.md} manifest
+./: {*/ -build/} manifest
 
 tests/: install = false
 
