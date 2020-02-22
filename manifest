@@ -1,6 +1,6 @@
 : 1
 name: doctest
-version: 2.3.5+1
+version: 2.3.6
 summary: The fastest feature-rich C++11/14/17/20 single-header testing framework for unit tests and TDD
 license: MIT
 description-file: upstream/README.md
