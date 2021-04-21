@@ -11,9 +11,10 @@
 !root.build
 !export.build
 !manifest
-!repositories.manifest
 
+!doc
 !*.md
+!LICENSE.txt
 
 !.gitignore
 !.gitmodules

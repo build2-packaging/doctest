@@ -1,9 +1,0 @@
-lib{doctest}: $src_upstream/doctest/hxx{doctest}
-{
-  cxx.export.poptions =+ "-I$src_upstream"
-}
-
-../upstream/
-{
-  hxx{*}: install.subdirs = true
-}

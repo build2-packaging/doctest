@@ -1,14 +1,17 @@
 : 1
 name: doctest
-version: 2.4.6
+version: 2.4.6+1
 summary: The fastest feature-rich C++11/14/17/20 single-header testing framework for unit tests and TDD
 license: MIT
-description-file: upstream/README.md
+
+description-file: UPSTREAM.README.md
 url: https://github.com/onqtam/doctest
 package-url: https://github.com/build2-packaging/doctest/
 email: vik.kirilov@gmail.com
 package-email: lyrahgames@mailbox.org
 build-warning-email: lyrahgames@mailbox.org
+
 depends: * build2 >= 0.13.0
 depends: * bpkg >= 0.13.0
+
 requires: c++11 | c++14 | c++17 | c++20
