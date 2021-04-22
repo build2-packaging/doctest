@@ -5,6 +5,8 @@ summary: The fastest feature-rich C++11/14/17/20 single-header testing framework
 license: MIT
 
 description-file: UPSTREAM.README.md
+changes-file: CHANGELOG.md
+
 url: https://github.com/onqtam/doctest
 package-url: https://github.com/build2-packaging/doctest/
 email: vik.kirilov@gmail.com
