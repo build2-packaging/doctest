@@ -1,0 +1,6 @@
+: 1
+name: doctest
+version: 2.4.6+2
+summary: The fastest feature-rich C++11/14/17/20 single-header testing\
+ framework for unit tests and TDD
+license: MIT
