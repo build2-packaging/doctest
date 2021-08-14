@@ -1,10 +1,20 @@
-# build2 Package for doctest
+<h1 align="center">
+    build2 Package for doctest
+</h1>
 
-This project builds and defines the build2 package for [doctest](https://github.com/onqtam/doctest).
-doctest is a new C++ testing framework but is by far the fastest both in compile times and runtime compared to other feature-rich alternatives. It brings the ability to have tests written directly in the production code thanks to a fast, transparent and flexible test runner with a clean interface.
+<p align="center">
+    This project builds and defines the build2 package for <a href="https://github.com/onqtam/doctest">doctest</a>.
+    doctest is a new C++ testing framework but is by far the fastest both in compile times and runtime compared to other feature-rich alternatives. It brings the ability to have tests written directly in the production code thanks to a fast, transparent and flexible test runner with a clean interface.
+</p>
 
-[![cppget.org build2 package](https://img.shields.io/website/https/cppget.org/doctest.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online)](https://cppget.org/doctest)
-[![queue.cppget.org build2 package](https://img.shields.io/website/https/queue.cppget.org/doctest.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running)](https://queue.cppget.org/doctest)
+<p align="center">
+    <a href="https://cppget.org/doctest">
+        <img src="https://img.shields.io/website/https/cppget.org/doctest.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
+    </a>
+    <a href="https://queue.cppget.org/doctest">
+        <img src="https://img.shields.io/website/https/queue.cppget.org/doctest.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running">
+    </a>
+</p>
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.
