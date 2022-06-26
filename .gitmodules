@@ -1,4 +1,4 @@
 [submodule "upstream"]
 	path = upstream
-	url = https://github.com/onqtam/doctest.git
+	url = https://github.com/doctest/doctest.git
         ignore = untracked
