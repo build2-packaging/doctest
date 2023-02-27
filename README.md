@@ -3,11 +3,17 @@
 </h1>
 
 <p align="center">
-    This project builds and defines the build2 package for <a href="https://github.com/onqtam/doctest">doctest</a>.
+    This project builds and defines the build2 package for <a href="https://github.com/doctest/doctest">doctest</a>.
     doctest is a new C++ testing framework but is by far the fastest both in compile times and runtime compared to other feature-rich alternatives. It brings the ability to have tests written directly in the production code thanks to a fast, transparent and flexible test runner with a clean interface.
 </p>
 
 <p align="center">
+    <a href="https://github.com/doctest/doctest">
+        <img src="https://img.shields.io/website/https/github.com/doctest/doctest.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online">
+    </a>
+    <a href="https://github.com/build2-packaging/doctest">
+        <img src="https://img.shields.io/website/https/github.com/build2-packaging/doctest.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online">
+    </a>
     <a href="https://cppget.org/doctest">
         <img src="https://img.shields.io/website/https/cppget.org/doctest.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
     </a>
@@ -15,6 +21,28 @@
         <img src="https://img.shields.io/website/https/queue.cppget.org/doctest.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running">
     </a>
 </p>
+
+## Usage
+Make sure to add the stable `cppget.org` repositories to your project's `repositories.manifest` to be able to fetch the packages.
+
+    :
+    role: prerequisite
+    location: https://pkg.cppget.org/1/stable
+    # trust: ...
+
+Add the respective dependency in your project's `manifest` file to make the package available for import.
+
+    depends: doctest ^ 2.4.10
+
+The header-only C++ library to use doctest as your unit testing framework can be imported by the following declaration in a `buildfile`.
+
+    import doctest = doctest%lib{doctest}
+
+## Configuration
+There are no configuration options vailable.
+
+## Issues
+Currently, there are no known issues.
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.
