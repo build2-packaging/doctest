@@ -1,0 +1,2 @@
+./: {*/ -build/} manifest legal{LICENSE.txt} doc{*.md}
+tests/: install = false

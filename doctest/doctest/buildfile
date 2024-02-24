@@ -1,0 +1,6 @@
+lib{doctest}: hxx{doctest}
+{
+  cxx.export.poptions = "-I$src_root"
+}
+
+hxx{*}: install = include/doctest/

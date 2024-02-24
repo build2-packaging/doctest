@@ -1,21 +1,6 @@
-./: lib{doctest}: doctest/hxx{doctest}
-{
-  cxx.export.poptions = "-I$src_root"
-}
-hxx{*}: install.subdirs = true
-
-./: tests/ manifest legal{LICENSE.txt}
-tests/: install = false
-
-# Install UPSTREAM.README.md as README.md
-# and README.md as PACKAGE.README.md
-# to make the package README.md the default
-# for the build2 package repository web view.
+# Glue buildfile that "pulls" all the packages in the project.
 #
-./: doc{README.md UPSTREAM.README.md CHANGELOG.md}
-doc{UPSTREAM.README.md}@./: install = doc/README.md
-doc{README.md}@./: install = doc/PACKAGE.README.md
+import pkgs = [dir_paths] $process.run_regex(\
+  cat $src_root/packages.manifest, '\s*location\s*:\s*(\S+)\s*', '\1')
 
-# For now, installation of documentation is disabled.
-#
-# ./: doc/markdown/doc{**.md}
+./: $pkgs
