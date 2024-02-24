@@ -1,5 +1,1 @@
-import libs = doctest%lib{doctest}
-import doctest = doctest%lib{doctest-main}
-
-./: exe{tutorial}: cxx{tutorial} $libs
-./: exe{subcases}: cxx{subcases} $doctest
+./: {*/ -build/}

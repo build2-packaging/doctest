@@ -45,3 +45,7 @@
 !root.build
 !*manifest
 !*testscript
+
+# Allow the test output directory.
+#
+!doctest/tests/all_features/test_output

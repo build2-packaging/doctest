@@ -1,0 +1,64 @@
+# omit the version and the num test cases skipped from the summary
+# - this way the output will change less often.
+#
+test.options += --no-skipped-summary --no-version
+
+# append the argument for removing paths from filenames
+# in the output so tests give the same output everywhere
+#
+test.options += --dt-no-path-filenames=1
+
+# append the argument for substituting source line numbers with 0
+# in the output so tests give the same output when lines change a bit
+#
+test.options += --dt-no-line-numbers=1
+
+# append the argument for ignoring the exit code of the test
+# programs because some are intended to have failing tests
+#
+test.options += --dt-no-exitcode=1
+
+# append the argument for using the same line format
+# in the output - so gcc/non-gcc builds have the same output
+#
+test.options += --dt-gnu-file-line=0
+
+# append the argument for skipping any time-related output
+# so that the reference output from reporters is stable on CI
+#
+test.options += --dt-no-time-in-output=1
+
+files_with_output = \
+  main.cpp \
+  doctest_proxy.h \
+  header.h \
+  alternative_macros.cpp \
+  assertion_macros.cpp \
+  stringification.cpp \
+  double_stringification.cpp \
+  reporters_and_listeners.cpp \
+  subcases.cpp \
+  logging.cpp \
+  templated_test_cases.cpp \
+  test_cases_and_suites.cpp \
+  asserts_used_outside_of_tests.cpp \
+  enums.cpp \
+  decomposition.cpp \
+  coverage_maxout.cpp
+
+for file: $files_with_output
+	# Test for standard text output.
+	#
+  $* -sf=*$file \
+    >>>"$src_base/test_output/$(file).txt" == 0
+
+  # Test with XML reporter.
+  #
+  $* -sf=*$file --reporters=xml \
+    >>>"$src_base/test_output/$(file)_xml.txt" == 0
+
+  # Test with JUnit reporter.
+  #
+  $* -sf=*$file --reporters=junit \
+    >>>"$src_base/test_output/$(file)_junit.txt" == 0
+end

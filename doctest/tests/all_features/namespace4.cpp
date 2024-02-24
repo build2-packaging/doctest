@@ -1,0 +1,1 @@
+../../../upstream/examples/all_features/namespace4.cpp

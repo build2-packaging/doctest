@@ -1,0 +1,1 @@
+../../../upstream/examples/all_features/namespace7.cpp
