@@ -38,11 +38,51 @@ The header-only C++ library to use doctest as your unit testing framework can be
 
     import doctest = doctest%lib{doctest}
 
-## Configuration
-There are no configuration options vailable.
+    import doctest = doctest%lib{doctest-main}
 
-## Issues
-Currently, there are no known issues.
+## Configuration
+
+    # doctest's configuration variables that either must be set globally.
+    #
+    config [bool] config.doctest.disable                 ?= false
+    config [bool] config.doctest.treat_char_as_string    ?= false
+    config [bool] config.doctest.use_std_headers         ?= false
+    config [bool] config.doctest.no_exceptions           ?= false
+    config [bool] config.doctest.no_contradicting_inline ?= false
+
+    # doctest's configuration variables that must only be set for the implementation.
+    #
+    config [string] config.doctest.options_prefix      ?= [null]
+    config [bool] config.doctest.no_unprefixed_options ?= false
+    config [bool] config.doctest.colors_none           ?= false
+    config [bool] config.doctest.colors_windows        ?= false
+    config [bool] config.doctest.colors_ansi           ?= false
+    config [bool] config.doctest.windows_seh           ?= false
+    config [bool] config.doctest.no_windows_seh        ?= false
+    config [bool] config.doctest.posix_signals         ?= false
+    config [bool] config.doctest.no_posix_signals      ?= false
+    config [bool] config.doctest.no_multithreading     ?= false
+    config [bool] config.doctest.no_multi_lane_atomics ?= false
+
+## Issues and Notes
+- `DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN`
+- `DOCTEST_CONFIG_IMPLEMENT`
+- `DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL`
+- specific source file definitions
+    - `DOCTEST_CONFIG_NO_SHORT_MACRO_NAMES`
+    - `DOCTEST_CONFIG_REQUIRE_STRINGIFICATION_FOR_ALL_USED_TYPES`
+    - `DOCTEST_CONFIG_DOUBLE_STRINGIFY`
+    - `DOCTEST_CONFIG_SUPER_FAST_ASSERTS`
+    - `DOCTEST_CONFIG_VOID_CAST_EXPRESSIONS`
+    - `DOCTEST_CONFIG_NO_COMPARISON_WARNING_SUPPRESSION`
+    - `DOCTEST_CONFIG_NO_TRY_CATCH_IN_ASSERTS`
+    - `DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS`
+    - `DOCTEST_CONFIG_ASSERTION_PARAMETERS_BY_VALUE`
+    - `DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS`
+    - `DOCTEST_CONFIG_ASSERTS_RETURN_VALUES`
+    - `DOCTEST_CONFIG_EVALUATE_ASSERTS_EVEN_WHEN_DISABLED`
+    - `DOCTEST_CONFIG_NO_INCLUDE_IOSTREAM`
+    - `DOCTEST_CONFIG_HANDLE_EXCEPTION`
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.

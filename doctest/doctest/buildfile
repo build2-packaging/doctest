@@ -1,6 +1,91 @@
-lib{doctest}: hxx{doctest}
-{
-  cxx.export.poptions = "-I$src_root"
-}
+./: lib{doctest}: hxx{doctest}
+./: lib{doctest-main}
 
+liba{doctest-main}: liba{doctest-main-static}
+libs{doctest-main}: liba{doctest-main-shared}
+
+liba{doctest-main-static}: obja{main-static} liba{doctest}
+liba{doctest-main-shared}: obja{main-shared} libs{doctest}
+
+obja{main-static}: cxx{main} liba{doctest}
+obja{main-shared}: cxx{main} libs{doctest}
+
+liba{doctest-main-static doctest-main-shared}: bin.whole = true
+
+# Configuration
+#
+global_poptions = # Empty
+
+if $config.doctest.disable
+  global_poptions += -DDOCTEST_CONFIG_DISABLE
+
+if $config.doctest.treat_char_as_string
+  global_poptions += -DDOCTEST_CONFIG_TREAT_CHAR_AS_STRING
+
+if $config.doctest.use_std_headers
+  global_poptions += -DDOCTEST_CONFIG_USE_STD_HEADERS
+
+if $config.doctest.no_exceptions
+  global_poptions += -DDOCTEST_CONFIG_NO_EXCEPTIONS
+
+if $config.doctest.no_contradicting_inline
+  global_poptions += -DDOCTEST_CONFIG_NO_CONTRADICTING_INLINE
+
+# Build Options
+#
+cxx.poptions =+ "-I$src_root"
+
+cxx.poptions += $global_poptions
+
+if ($config.doctest.options_prefix != [null])
+  cxx.poptions += -DDOCTEST_CONFIG_OPTIONS_PREFIX="\"$config.doctest.options_prefix\""
+
+if $config.doctest.no_unprefixed_options
+  cxx.poptions += -DDOCTEST_CONFIG_NO_UNPREFIXED_OPTIONS
+
+if $config.doctest.colors_none
+  cxx.poptions += -DDOCTEST_CONFIG_COLORS_NONE
+
+if $config.doctest.colors_windows
+  cxx.poptions += -DDOCTEST_CONFIG_COLORS_WINDOWS
+
+if $config.doctest.colors_ansi
+  cxx.poptions += -DDOCTEST_CONFIG_COLORS_ANSI
+
+if $config.doctest.windows_seh
+  cxx.poptions += -DDOCTEST_CONFIG_WINDOWS_SEH
+
+if $config.doctest.no_windows_seh
+  cxx.poptions += -DDOCTEST_CONFIG_NO_WINDOWS_SEH
+
+if $config.doctest.posix_signals
+  cxx.poptions += -DDOCTEST_CONFIG_POSIX_SIGNALS
+
+if $config.doctest.no_posix_signals
+  cxx.poptions += -DDOCTEST_CONFIG_NO_POSIX_SIGNALS
+
+if $config.doctest.no_multithreading
+  cxx.poptions += -DDOCTEST_CONFIG_NO_MULTITHREADING
+
+if $config.doctest.no_multi_lane_atomics
+  cxx.poptions += -DDOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
+
+# Export Options
+#
+lib{doctest}: cxx.export.poptions = "-I$src_root" $global_poptions
+#
+liba{doctest-main}: cxx.export.libs = lib{doctest}
+libs{doctest-main}: cxx.export.libs = liba{doctest-main-shared} lib{doctest}
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  lib{doctest doctest-main}: bin.lib.version = "-$version.project_id"
+else
+  lib{doctest doctest-main}: bin.lib.version = "-$version.major.$version.minor"
+
+# Install Options
+#
 hxx{*}: install = include/doctest/

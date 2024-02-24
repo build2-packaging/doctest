@@ -1,7 +1,41 @@
+# Uncomment to suppress warnings coming from external libraries.
+#
+#cxx.internal.scope = current
+
 cxx.std = latest
+
 using cxx
 
 hxx{*}: extension = h
 cxx{*}: extension = cpp
 
+# Assume headers are NOT importable unless stated otherwise.
+#
+hxx{*}: cxx.importable = false
+
+# The test target for cross-testing (running tests under Wine, etc).
+#
 test.target = $cxx.target
+
+# doctest's configuration variables that either must be set globally.
+#
+config [bool] config.doctest.disable                 ?= false
+config [bool] config.doctest.treat_char_as_string    ?= false
+config [bool] config.doctest.use_std_headers         ?= false
+config [bool] config.doctest.no_exceptions           ?= false
+config [bool] config.doctest.no_contradicting_inline ?= false
+
+# doctest's configuration variables that must only be set for the implementation.
+#
+config [string] config.doctest.options_prefix      ?= [null]
+config [bool] config.doctest.no_unprefixed_options ?= false
+config [bool] config.doctest.colors_none           ?= false
+config [bool] config.doctest.colors_windows        ?= false
+config [bool] config.doctest.colors_ansi           ?= false
+config [bool] config.doctest.windows_seh           ?= false
+config [bool] config.doctest.no_windows_seh        ?= false
+config [bool] config.doctest.posix_signals         ?= false
+config [bool] config.doctest.no_posix_signals      ?= false
+config [bool] config.doctest.no_multithreading     ?= false
+config [bool] config.doctest.no_multi_lane_atomics ?= false
+
