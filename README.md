@@ -23,7 +23,7 @@ If the stable section of `cppget.org` is not an option then add this Git reposit
 
 Add the respective dependency in your project's `manifest` file to make the package available for import.
 
-    depends: doctest ^2.4.6
+    depends: doctest ^2.4.0
 
 To import the library target that already implements the `main` function, include the following declaration in a `buildfile`.
 

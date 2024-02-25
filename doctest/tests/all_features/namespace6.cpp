@@ -1,1 +1,0 @@
-../../../upstream/examples/all_features/namespace6.cpp
