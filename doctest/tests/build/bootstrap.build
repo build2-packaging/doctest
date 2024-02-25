@@ -1,4 +1,4 @@
-project =
+project = # Empty test project
 
 using config
 using test

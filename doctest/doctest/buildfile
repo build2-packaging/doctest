@@ -1,15 +1,19 @@
+# Besides the header-only library target,
+# provide a library target that implements 'main'.
+# 'main' should be linked statically.
+#
 ./: lib{doctest}: hxx{doctest}
 ./: lib{doctest-main}
-
+#
 liba{doctest-main}: liba{doctest-main-static}
 libs{doctest-main}: liba{doctest-main-shared}
-
+#
 liba{doctest-main-static}: obja{main-static} liba{doctest}
 liba{doctest-main-shared}: obja{main-shared} libs{doctest}
-
+#
 obja{main-static}: cxx{main} liba{doctest}
 obja{main-shared}: cxx{main} libs{doctest}
-
+#
 liba{doctest-main-static doctest-main-shared}: bin.whole = true
 
 # Configuration
