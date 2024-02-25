@@ -93,3 +93,15 @@ else
 # Install Options
 #
 hxx{*}: install = include/doctest/
+
+# Include original unfixed source code in distribution.
+#
+# The fix was to not anymore rely on SIGSTKSZ
+# as it is no longer a constant expression.
+# This has already been fixed upstream.
+# However, to progress with '2.4.0',
+# we fix it here by hand.
+#
+# See: https://github.com/doctest/doctest/pull/474/commits/db31450039f18e6ffa0bd7305419fd00de1aaeef
+#
+./: file{doctest.h.orig}

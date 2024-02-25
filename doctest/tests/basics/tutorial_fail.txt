@@ -7,6 +7,6 @@ tutorial_fail.cpp(0): ERROR: CHECK( factorial(0) == 1 ) is NOT correct!
   values: CHECK( 0 == 1 )
 
 ===============================================================================
-[doctest] test cases: 1 | 0 passed | 1 failed | 0 skipped
-[doctest] assertions: 5 | 4 passed | 1 failed |
+[doctest] test cases:      1 |      0 passed |      1 failed |      0 skipped
+[doctest] assertions:      5 |      4 passed |      1 failed |
 [doctest] Status: FAILURE!

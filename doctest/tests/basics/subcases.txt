@@ -28,6 +28,6 @@ root
 2
 2.4
 ===============================================================================
-[doctest] test cases: 1 | 1 passed | 0 failed | 0 skipped
-[doctest] assertions: 0 | 0 passed | 0 failed |
+[doctest] test cases:      1 |      1 passed |      0 failed |      0 skipped
+[doctest] assertions:      0 |      0 passed |      0 failed |
 [doctest] Status: SUCCESS!
