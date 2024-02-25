@@ -67,7 +67,12 @@ for file: $files_with_output
     >>>"$outdir/$(file)_junit.txt" == 0
 end
 
-$* -sf=*concurrency.cpp >- == 0
+: concurrency-test
+: not adding it for MinGW since it crashes
+if ($cxx.target.system != 'mingw32')
+{
+  $* -sf=*concurrency.cpp >- == 0
+}
 
 $* -sf=*namespace1.cpp >- == 0
 $* -sf=*namespace2.cpp >- == 0
