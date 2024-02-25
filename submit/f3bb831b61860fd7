@@ -1,0 +1,7 @@
+: 1
+name: doctest
+version: 2.3.6+1
+type: lib
+language: c++
+summary: C++ testing framework for unit tests and TDD
+license: MIT
