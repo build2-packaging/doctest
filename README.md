@@ -1,57 +1,54 @@
-<h1 align="center">
-    build2 Package for doctest
-</h1>
+# build2 Package for doctest
 
-<p align="center">
-    This project builds and defines the build2 package for <a href="https://github.com/doctest/doctest">doctest</a>.
-    doctest is a new C++ testing framework but is by far the fastest both in compile times and runtime compared to other feature-rich alternatives. It brings the ability to have tests written directly in the production code thanks to a fast, transparent and flexible test runner with a clean interface.
-</p>
+This project is a [build2](https://build2.org) package repository that provides access to [`doctest`](https://github.com/doctest/doctest), a C++ testing framework that brings the ability to have tests written directly in the production code thanks to a fast, transparent and flexible test runner with a clean interface.
 
-<p align="center">
-    <a href="https://github.com/doctest/doctest">
-        <img src="https://img.shields.io/website/https/github.com/doctest/doctest.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://github.com/build2-packaging/doctest">
-        <img src="https://img.shields.io/website/https/github.com/build2-packaging/doctest.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://cppget.org/doctest">
-        <img src="https://img.shields.io/website/https/cppget.org/doctest.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://queue.cppget.org/doctest">
-        <img src="https://img.shields.io/website/https/queue.cppget.org/doctest.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running">
-    </a>
-</p>
+[![Official](https://img.shields.io/website/https/github.com/doctest/doctest.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/doctest/doctest)
+[![build2](https://img.shields.io/website/https/github.com/build2-packaging/doctest.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/build2-packaging/doctest)
+[![cppget.org](https://img.shields.io/website/https/cppget.org/doctest.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online)](https://cppget.org/doctest)
+[![queue.cppget.org](https://img.shields.io/website/https/queue.cppget.org/doctest.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running)](https://queue.cppget.org/doctest)
 
 ## Usage
-Make sure to add the stable `cppget.org` repositories to your project's `repositories.manifest` to be able to fetch the packages.
+Make sure to add the stable section of the [`cppget.org`](https://cppget.org/?about) repository to your project's `repositories.manifest` to be able to fetch this package.
 
     :
     role: prerequisite
     location: https://pkg.cppget.org/1/stable
     # trust: ...
 
+If the stable section of `cppget.org` is not an option then add this Git repository itself instead as a prerequisite.
+
+    :
+    role: prerequisite
+    location: https://github.com/build2-packaging/doctest.git
+
 Add the respective dependency in your project's `manifest` file to make the package available for import.
 
-    depends: doctest ^ 2.4.10
+    depends: doctest ^2.4.11
 
-The header-only C++ library to use doctest as your unit testing framework can be imported by the following declaration in a `buildfile`.
-
-    import doctest = doctest%lib{doctest}
+To import the library target that already implements the `main` function, include the following declaration in a `buildfile`.
 
     import doctest = doctest%lib{doctest-main}
 
-## Configuration
+If you want to customize the testing process by providing your own `main`, use the following header-only library target instead.
 
-    # doctest's configuration variables that either must be set globally.
-    #
+    import doctest = doctest%lib{doctest}
+
+
+## Configuration
+`doctest` itself already comes with various configuration options.
+Some of these can be accessed by the package configuration.
+For an explanation, refer to `doctest`'s configuration documentation.
+The following variables need to be provided globally and will affect both library targets, `lib{doctest}` and `lib{doctest-main}`.
+
     config [bool] config.doctest.disable                 ?= false
     config [bool] config.doctest.treat_char_as_string    ?= false
     config [bool] config.doctest.use_std_headers         ?= false
     config [bool] config.doctest.no_exceptions           ?= false
     config [bool] config.doctest.no_contradicting_inline ?= false
 
-    # doctest's configuration variables that must only be set for the implementation.
-    #
+The following configuration variables only need to be set for the implementation unit and will only affect the `lib{doctest-main}` library target.
+Define their respective pre-processor macros for doctest implementation unit that implement their own `main` function and only link to `lib{doctest}`.
+
     config [string] config.doctest.options_prefix      ?= [null]
     config [bool] config.doctest.no_unprefixed_options ?= false
     config [bool] config.doctest.colors_none           ?= false
@@ -64,11 +61,11 @@ The header-only C++ library to use doctest as your unit testing framework can be
     config [bool] config.doctest.no_multithreading     ?= false
     config [bool] config.doctest.no_multi_lane_atomics ?= false
 
-## Issues and Notes
-- `DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN`
-- `DOCTEST_CONFIG_IMPLEMENT`
-- `DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL`
-- specific source file definitions
+- Some configuration options cannot be provided by the package. Use them only in your `doctest` implementation file when linking against `lib{doctest}` for providing your own `main` function.
+    - `DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN`
+    - `DOCTEST_CONFIG_IMPLEMENT`
+    - `DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL`
+- Some configuration options do not need to be defined globally. You may also define them only for specific source files when they are actually needed. As of such, no global package configuration variables are provided for these options. Instead, define their respective pre-processor macros in the required units to enable them.
     - `DOCTEST_CONFIG_NO_SHORT_MACRO_NAMES`
     - `DOCTEST_CONFIG_REQUIRE_STRINGIFICATION_FOR_ALL_USED_TYPES`
     - `DOCTEST_CONFIG_DOUBLE_STRINGIFY`
@@ -83,6 +80,10 @@ The header-only C++ library to use doctest as your unit testing framework can be
     - `DOCTEST_CONFIG_EVALUATE_ASSERTS_EVEN_WHEN_DISABLED`
     - `DOCTEST_CONFIG_NO_INCLUDE_IOSTREAM`
     - `DOCTEST_CONFIG_HANDLE_EXCEPTION`
+
+## Issues and Notes
+- The tests fail for MinGW on Windows as different line numbers for assertions in the file `asserts_used_outside_of_tests.cpp` are generated and compared to expected line numbers in `asserts_used_outside_of_tests.cpp.txt`. This issue is not caused by the build system and must be fixed upstream. Fortunately, it is not a major problem and the package can be used without concerns on all available platforms.
+- According to the upstream build system, `lib{doctest-main}` does not need to export `pthread` for multi-threading. Also, basic unit tests run perfectly fine. As of that, `pthread` is neither exported by `lib{doctest}` nor by `lib{doctest-main}`. However, in feature tests, `pthread` is used to test concurrency. Consequently, be aware of linking `pthread` when needed.
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.

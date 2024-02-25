@@ -9,9 +9,8 @@
 # Don't ignore Git-specific files.
 #
 !.git*
-!.githooks/**
 
-# Allow 'upstream' submodule.
+# Allow 'upstream' submodule link.
 #
 !upstream
 
@@ -20,14 +19,10 @@
 !*.md
 !LICENSE.txt
 
-# Don't ignore default C and C++ file extensions.
+# Don't ignore default C++ file extensions.
 #
 !*.h
-!*.c
-!*.hpp
 !*.cpp
-!*.ipp
-!*.tpp
 
 # Don't ignore source generation files.
 #
@@ -46,7 +41,7 @@
 !*manifest
 !*testscript
 
-# Allow the test output directory and files.
+# Allow directory and files to test output against.
 #
 !doctest/tests/all_features/test_output
 !*.txt
