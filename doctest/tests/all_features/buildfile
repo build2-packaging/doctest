@@ -14,4 +14,6 @@ cxx.poptions += \
 if ($cxx.target.system != 'win32-msvc')
   cxx.libs += -pthread
 
+# Distribute test output files.
+#
 ./: test_output/file{*.txt}

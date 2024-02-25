@@ -28,6 +28,8 @@ test.options += --dt-gnu-file-line=0
 #
 test.options += --dt-no-time-in-output=1
 
+outdir = "$src_base/test_output"
+
 files_with_output = \
   main.cpp \
   doctest_proxy.h \
@@ -47,18 +49,377 @@ files_with_output = \
   coverage_maxout.cpp
 
 for file: $files_with_output
+  options = -sf=*$file
+
 	# Test for standard text output.
 	#
-  $* -sf=*$file \
-    >>>"$src_base/test_output/$(file).txt" == 0
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
 
   # Test with XML reporter.
   #
-  $* -sf=*$file --reporters=xml \
-    >>>"$src_base/test_output/$(file)_xml.txt" == 0
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
 
   # Test with JUnit reporter.
   #
-  $* -sf=*$file --reporters=junit \
-    >>>"$src_base/test_output/$(file)_junit.txt" == 0
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
 end
+
+$* -sf=*concurrency.cpp >- == 0
+
+$* -sf=*namespace1.cpp >- == 0
+$* -sf=*namespace2.cpp >- == 0
+$* -sf=*namespace3.cpp >- == 0
+$* -sf=*namespace4.cpp >- == 0
+$* -sf=*namespace5.cpp >- == 0
+$* -sf=*namespace6.cpp >- == 0
+$* -sf=*namespace7.cpp >- == 0
+$* -sf=*namespace8.cpp >- == 0
+$* -sf=*namespace9.cpp >- == 0
+
+: version-option
+{
+  options = -v
+
+  : text-output
+  $0 $options \
+    >>>"$outdir/version.txt" == 0
+
+# Doesn't work due to global path of test executable.
+#
+#   : xml-output
+#   $0 $options --reporters=xml \
+#     >>>"$outdir/version_xml.txt" == 0
+
+  : junit-output
+  $0 $options --reporters=junit \
+    >>>"$outdir/version_junit.txt" == 0
+}
+
+: help-option
+{
+  options = -h
+
+  : text-output
+  $* $options \
+    >>>"$outdir/help.txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/help_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/help_junit.txt" == 0
+}
+
+: count-query
+{
+  options = -c -sf=*coverage*
+  file = count
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: list-test-cases
+{
+  options = -ltc -sf=*coverage*
+  file = list_test_cases
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: list-test-suites
+{
+  options = -lts -sf=*coverage*
+  file = list_test_suites
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: list-reporters
+{
+  options = -lr -sf=*coverage*
+  file = list_reporters
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: all-binary
+: print all binary asserts - for getAssertString()
+{
+  options = -tc=all?binary* -s
+  file = all_binary
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: abort-after
+: abort after 2 assert fails and parse a negative
+{
+  options = -aa=2 -e=off -sf=*coverage*
+  file = abort_after
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: first-last
+: run a range
+{
+  options = -f=2 -l=4 -sf=*coverage*
+  file = first_last
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: filter-1
+:
+: should filter out all "-order-by=name"
+: to avoid different output depending on the compiler used
+{
+  options = -ts=none
+  file = filter_1
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: filter-2
+: should filter out all + print skipped
+{
+  options = -tse=* -nv -order-by=name
+  file = filter_2
+
+  : text-output
+  $0 $options \
+    >>>"$outdir/$(file).txt" == 0
+
+# Doesn't work due to global path of test executable.
+#
+#   : xml-output
+#   $0 $options --reporters=xml \
+#     >>>"$outdir/$(file)_xml.txt" == 0
+#
+#   : junit-output
+#   $0 $options --reporters=junit \
+#     >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: filter-3
+: enter a specific subcase - sc1
+{
+  options = -sc=from*,sc* -sce=sc2 -sf=*subcases*
+  file = filter_3
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: filter-4
+: escape stuff
+{
+  options = -ts=*\\, -tc=*\\: -sc=*\\\\\\,,*:
+  file = filter_4
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: order-1
+{
+  options = -ob=suite -ns -sf=*test_cases_and_suites*
+  file = order_1
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: order-2
+{
+  options = -ob=name -sf=*test_cases_and_suites*
+  file = order_2
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: order-3
+: exclude everything for no output
+{
+  options = -ob=rand -sfe=*
+  file = order_3
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: quiet-option
+{
+  options = -q -sf=*test_cases_and_suites*
+
+  $* $options >>EOO == 0
+  Program code.
+  EOO
+}
+
+: minimal-output
+{
+  options = -m -sf=*test_cases_and_suites*
+  file = minimal
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
+
+: minimal-no-fail
+{
+  options = -m -sf=*no_failures.cpp
+  file = minimal_no_fail
+
+  : text-output
+  $* $options \
+    >>>"$outdir/$(file).txt" == 0
+
+  : xml-output
+  $* $options --reporters=xml \
+    >>>"$outdir/$(file)_xml.txt" == 0
+
+  : junit-output
+  $* $options --reporters=junit \
+    >>>"$outdir/$(file)_junit.txt" == 0
+}
