@@ -1,5 +1,20 @@
-import libs = doctest%lib{doctest}
+import doctest_header = doctest%lib{doctest}
 import doctest = doctest%lib{doctest-main}
 
-./: exe{tutorial}: cxx{tutorial} $libs
-./: exe{subcases}: cxx{subcases} $doctest
+# Getting-Started Example with Header-Only Library
+#
+./: exe{tutorial_pass}: cxx{tutorial_pass} $doctest_header testscript{tutorial_pass}
+./: exe{tutorial_fail}: cxx{tutorial_fail} $doctest_header testscript{tutorial_fail}
+
+# Subcases
+#
+./: exe{subcases}: cxx{subcases} $doctest testscript{subcases}
+./: exe{vector}: cxx{vector} $doctest testscript{vector}
+
+# Easy way to fix test coverage - disable colors and crash handling
+# Should only be used for header-only linkage.
+#
+# cxx.poptions += \
+#   -DDOCTEST_CONFIG_COLORS_NONE \
+#   -DDOCTEST_CONFIG_NO_POSIX_SIGNALS \
+#   -DDOCTEST_CONFIG_NO_WINDOWS_SEH

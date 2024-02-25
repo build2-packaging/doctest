@@ -1,0 +1,26 @@
+# omit the version and the num test cases skipped from the summary
+# - this way the output will change less often.
+#
+test.options += --no-version
+
+# append the argument for removing paths from filenames
+# in the output so tests give the same output everywhere
+#
+test.options += --dt-no-path-filenames=1
+
+# append the argument for substituting source line numbers with 0
+# in the output so tests give the same output when lines change a bit
+#
+test.options += --dt-no-line-numbers=1
+
+# append the argument for using the same line format
+# in the output - so gcc/non-gcc builds have the same output
+#
+test.options += --dt-gnu-file-line=0
+
+# append the argument for skipping any time-related output
+# so that the reference output from reporters is stable on CI
+#
+test.options += --dt-no-time-in-output=1
+
+$* >>>$src_base/subcases.txt == 0

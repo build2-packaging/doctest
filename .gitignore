@@ -46,6 +46,7 @@
 !*manifest
 !*testscript
 
-# Allow the test output directory.
+# Allow the test output directory and files.
 #
 !doctest/tests/all_features/test_output
+!*.txt
