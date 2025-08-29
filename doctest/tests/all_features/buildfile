@@ -17,3 +17,9 @@ if ($cxx.target.system != 'win32-msvc')
 # Distribute test output files.
 #
 ./: test_output/file{*.txt}
+
+# The original file used the `WIN32` macro
+# instead of the official `_WIN32` macro
+# to check for MSVC on Windows.
+#
+./: file{bitfield_packed_struct.cpp.orig}

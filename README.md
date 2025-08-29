@@ -84,6 +84,7 @@ Define their respective pre-processor macros for doctest implementation unit tha
 ## Issues and Notes
 - The tests fail for MinGW on Windows as different line numbers for assertions in the file `asserts_used_outside_of_tests.cpp` are generated and compared to expected line numbers in `asserts_used_outside_of_tests.cpp.txt`. This issue is not caused by the build system and must be fixed upstream. Fortunately, it is not a major problem and the package can be used without concerns on all available platforms.
 - According to the upstream build system, `lib{doctest-main}` does not need to export `pthread` for multi-threading. Also, basic unit tests run perfectly fine. As of that, `pthread` is neither exported by `lib{doctest}` nor by `lib{doctest-main}`. However, in feature tests, `pthread` is used to test concurrency. Consequently, be aware of linking `pthread` when needed.
+- The `bitfield_packed_struct.cpp` file uses the `WIN32` macro to determine whether the code is compiled with MSVC on Windows. However, the official macro is `_WIN32`. Therefore the code has been adjusted and the original is now stored as `bitfield_packed_struct.cpp.orig`.
 
 ## Contributing
 Thank you in advance for your help and contribution to keep this package up-to-date.
